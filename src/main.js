@@ -452,6 +452,10 @@ const createTaskTemplate = () => {
   );
 };
 
+const createLoadMoreButtonTemplate = () => {
+  return `<button class="load-more" type="button">load more</button>`;
+};
+
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
@@ -469,3 +473,6 @@ render(tasksListElement, createEditTaskTemplate());
 new Array(TASK_AMOUNT)
   .fill(``)
   .forEach(() => render(tasksListElement, createTaskTemplate()));
+
+const boardElement = document.querySelector(`.board`);
+render(boardElement, createLoadMoreButtonTemplate());
