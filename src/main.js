@@ -1,7 +1,7 @@
 import {createMenuTemplate} from './components/menu';
 import {createFilterTemplate} from './components/filter';
 import {createBoardTemplate} from './components/board';
-import {createTaskEditionFormTemplate} from './components/task-edition-form';
+import {createTaskEditingFormTemplate} from './components/task-editing-form';
 import {createTaskTemplate} from './components/task';
 import {createLoadMoreButtonTemplate} from './components/load-more-button';
 
@@ -23,8 +23,8 @@ render(mainElement, createFilterTemplate());
 render(mainElement, createBoardTemplate());
 
 const tasksListElement = document.querySelector(`.board__tasks`);
-render(tasksListElement, createTaskEditionFormTemplate());
-tasks.forEach((task) => render(tasksListElement, createTaskTemplate(task)));
+render(tasksListElement, createTaskEditingFormTemplate(tasks[0]));
+tasks.slice(1).forEach((task) => render(tasksListElement, createTaskTemplate(task)));
 
 const boardElement = document.querySelector(`.board`);
 render(boardElement, createLoadMoreButtonTemplate());
