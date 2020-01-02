@@ -5,7 +5,11 @@ import {createTaskEditionFormTemplate} from './components/task-edition-form';
 import {createTaskTemplate} from './components/task';
 import {createLoadMoreButtonTemplate} from './components/load-more-button';
 
-const TASKS_COUNT = 3;
+import {generateTasks} from './mocks/task.js';
+
+const TASKS_COUNT = 20;
+
+const tasks = generateTasks(TASKS_COUNT);
 
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
@@ -20,10 +24,7 @@ render(mainElement, createBoardTemplate());
 
 const tasksListElement = document.querySelector(`.board__tasks`);
 render(tasksListElement, createTaskEditionFormTemplate());
-
-new Array(TASKS_COUNT)
-  .fill(``)
-  .forEach(() => render(tasksListElement, createTaskTemplate()));
+tasks.forEach((task) => render(tasksListElement, createTaskTemplate(task)));
 
 const boardElement = document.querySelector(`.board`);
 render(boardElement, createLoadMoreButtonTemplate());
