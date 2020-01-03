@@ -9,6 +9,8 @@ import {generateTasks} from './mocks/task.js';
 import {generateFilters} from './mocks/filter';
 
 const TASKS_COUNT = 20;
+const INITIAL_TASKS_COUNT = 8;
+const TASKS_COUNT_PER_LOAD = 8;
 
 const tasks = generateTasks(TASKS_COUNT);
 const filters = generateFilters(TASKS_COUNT);
@@ -26,7 +28,21 @@ render(mainElement, createBoardTemplate());
 
 const tasksListElement = document.querySelector(`.board__tasks`);
 render(tasksListElement, createTaskEditingFormTemplate(tasks[0]));
-tasks.slice(1).forEach((task) => render(tasksListElement, createTaskTemplate(task)));
+let showedTasksCount = INITIAL_TASKS_COUNT;
+tasks.slice(1, showedTasksCount).forEach((task) => render(tasksListElement, createTaskTemplate(task)));
 
 const boardElement = document.querySelector(`.board`);
 render(boardElement, createLoadMoreButtonTemplate());
+
+const loadMoreButton = boardElement.querySelector(`.load-more`);
+loadMoreButton.addEventListener(`click`, (event) => {
+  const prevShowedTasksCount = showedTasksCount;
+  showedTasksCount = showedTasksCount + TASKS_COUNT_PER_LOAD;
+
+  tasks.slice(prevShowedTasksCount, showedTasksCount)
+    .forEach((task) => render(tasksListElement, createTaskTemplate(task)));
+
+  if (showedTasksCount >= TASKS_COUNT) {
+    event.target.remove();
+  }
+});
